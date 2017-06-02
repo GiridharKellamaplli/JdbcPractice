@@ -8,26 +8,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tek.jdbcdemo.model.Person;
 
+@Component
 public class JdbcDemoDAO {
+
+	@Autowired
+	private DataSource dataSource;
 
 	public Connection establishConnection() {
 
 		Connection connection = null;
 		try {
-			Class.forName(SQLQueries.DRIVER_NAME).newInstance();
-			connection = DriverManager.getConnection(SQLQueries.URL, SQLQueries.UNAME, SQLQueries.PASSWORD);
+			connection = dataSource.getConnection();
 
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

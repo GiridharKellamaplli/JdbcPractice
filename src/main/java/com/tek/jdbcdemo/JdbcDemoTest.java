@@ -2,6 +2,9 @@ package com.tek.jdbcdemo;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.tek.jdbcdemo.dao.JdbcDemoDAO;
 import com.tek.jdbcdemo.model.Person;
 
@@ -13,7 +16,11 @@ public class JdbcDemoTest {
 	}
 
 	private void insertAndGetPerson() {
-		JdbcDemoDAO demoDAO = new JdbcDemoDAO();
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("beansConfig.xml");
+
+		JdbcDemoDAO demoDAO = context.getBean("jdbcDemoDAO", JdbcDemoDAO.class);
+		// JdbcDemoDAO demoDAO = new JdbcDemoDAO();
 		// demoDAO.savePerson("Giridhar", 25);
 		List<Person> persons = demoDAO.getPersonsByName("Giridhar");
 		for (Person person : persons) {
