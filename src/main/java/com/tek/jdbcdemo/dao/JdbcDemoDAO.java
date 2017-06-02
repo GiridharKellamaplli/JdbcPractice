@@ -30,8 +30,23 @@ public class JdbcDemoDAO {
 		jdbcTemplate.execute(SQLQueries.CREATE_TABLE_PERSON);
 	}
 
-	public void savePerson(String name, int age) {
-		jdbcTemplate.execute(SQLQueries.INSERT_PERSON);
+	/**
+	 * Insert the {@link Person} object into the DB by using
+	 * {@link JdbcTemplate} update().
+	 * 
+	 * @param person
+	 *
+	 */
+	public void savePerson(Person person) {
+		int rowsEffected = jdbcTemplate.update(SQLQueries.INSERT_PERSON, person.getName(), person.getAge());
+	}
+
+	public void updatePersonById(int id) {
+		int rowsEffected = jdbcTemplate.update(SQLQueries.UPDATE_PERSON, id);
+	}
+
+	public void deletePersonById(int id) {
+		int rowsEffected = jdbcTemplate.update(SQLQueries.DELETE_PERSON, id);
 	}
 
 	// public List<Map<String, Object>> getPersonsByName(String name) {

@@ -4,6 +4,11 @@ public class SQLQueries {
 
 	final protected static String CREATE_TABLE_PERSON = "CREATE TABLE person(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(200) NOT NULL, age INT, PRIMARY KEY(id));";
 	final protected static String INSERT_PERSON = "INSERT INTO person (name,age) values(?,?);";
+	final protected static String UPDATE_PERSON = "";
+	final protected static String DELETE_PERSON = "DELETE FROM person where id=?";
+	
+	
+	
 	final protected static String SELECT_PERSON_BY_NAME = "SELECT * FROM person where name=?";
 	final protected static String SELECT_PERSON_BY_ID = "SELECT * FROM person where id=?";
 	final protected static String SELECT_ALL_PERSONS = "SELECT * FROM person";
