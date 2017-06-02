@@ -11,6 +11,10 @@ public class Person {
 		this.age = age;
 	}
 
+	public Person() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}

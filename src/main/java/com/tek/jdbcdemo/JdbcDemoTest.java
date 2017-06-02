@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.tek.jdbcdemo.dao.JdbcDemoDAO;
+import com.tek.jdbcdemo.model.Person;
 
 public class JdbcDemoTest {
 
@@ -21,17 +22,27 @@ public class JdbcDemoTest {
 
 		JdbcDemoDAO demoDAO = context.getBean("jdbcDemoDAO", JdbcDemoDAO.class);
 
-		List<Map<String, Object>> persons = demoDAO.getPersons();
-		for (Map<String, Object> person : persons) {
+		List<Person> persons = demoDAO.getPersons();
+		for (Person person : persons) {
 			System.out.println(person);
-			System.out.println(person.get("id") + "  " + person.get("name") + "  " + person.get("age"));
+			System.out.println(person.getName() + "   " + person.getAge());
 		}
-		System.out.println("----------------------------------------------");
-		List<Map<String, Object>> personsList = demoDAO.getPersonsByName("Giridhar");
-		for (Map<String, Object> person : personsList) {
+		System.out.println("----------------Person By Name------------------------------");
+		List<Person> personsListByName = demoDAO.getPersonByName("Giridhar");
+		for (Person person : personsListByName) {
 			System.out.println(person);
-			System.out.println(person.get("id") + "  " + person.get("name") + "  " + person.get("age"));
+			System.out.println(person.getName() + "   " + person.getAge());
 		}
+
+		System.out.println("-------Person By Id-----------------");
+		Person person = demoDAO.getPersonById(1);
+		System.out.println(person.getName() + "   " + person.getAge());
+		
+		System.out.println("----------Persons Count--------------");
+		System.out.println(demoDAO.getPersonsCount());
+		
+		System.out.println("-------------Person By Name-----------");
+		System.out.println(demoDAO.getPersonNameById(1));
 	}
 
 }
