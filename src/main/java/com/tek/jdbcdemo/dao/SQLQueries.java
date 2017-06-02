@@ -4,7 +4,8 @@ public class SQLQueries {
 
 	final protected static String CREATE_TABLE_PERSON = "CREATE TABLE person(id INT NOT NULL AUTO_INCREMENT, name VARCHAR(200) NOT NULL, age INT, PRIMARY KEY(id));";
 	final protected static String INSERT_PERSON = "INSERT INTO person (name,age) values(?,?);";
-	final protected static String SELECT_PERSON_BY_NAME = "SELECT * FROM person where name=?;";
+	final protected static String SELECT_PERSON_BY_NAME = "SELECT * FROM person where name=?";
+	final protected static String SELECT_ALL_PERSONS = "SELECT * FROM person";
 
 	/*
 	 * MySql database connection properties.
