@@ -37,12 +37,14 @@ public class JdbcDemoTest {
 		System.out.println("-------Person By Id-----------------");
 		Person person = demoDAO.getPersonById(1);
 		System.out.println(person.getName() + "   " + person.getAge());
-		
+
 		System.out.println("----------Persons Count--------------");
 		System.out.println(demoDAO.getPersonsCount());
-		
+
 		System.out.println("-------------Person By Name-----------");
 		System.out.println(demoDAO.getPersonNameById(1));
+
+		demoDAO.savePersonUsingNamedParamJdbcTemplate(new Person("Mounika", 23));
 	}
 
 }

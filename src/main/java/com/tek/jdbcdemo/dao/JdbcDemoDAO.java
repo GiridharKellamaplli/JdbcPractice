@@ -8,6 +8,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import com.tek.jdbcdemo.model.Person;
@@ -17,6 +20,9 @@ public class JdbcDemoDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	// public List<Map<String, Object>> getPersons() {
 	// return jdbcTemplate.queryForList(SQLQueries.SELECT_ALL_PERSONS);
@@ -31,14 +37,21 @@ public class JdbcDemoDAO {
 	}
 
 	/**
+	 * 
 	 * Insert the {@link Person} object into the DB by using
 	 * {@link JdbcTemplate} update().
 	 * 
 	 * @param person
-	 *
 	 */
 	public void savePerson(Person person) {
 		int rowsEffected = jdbcTemplate.update(SQLQueries.INSERT_PERSON, person.getName(), person.getAge());
+	}
+
+	public void savePersonUsingNamedParamJdbcTemplate(Person person) {
+		String sql = "INSERT INTO person (name,age) value (:name,:age)";
+		SqlParameterSource sqlParameterSource = new MapSqlParameterSource("age", person.getAge()).addValue("name",
+				person.getName());
+		namedParameterJdbcTemplate.update(sql, sqlParameterSource);
 	}
 
 	public void updatePersonById(int id) {
@@ -58,8 +71,9 @@ public class JdbcDemoDAO {
 	}
 
 	public Person getPersonById(int id) {
-		// return jdbcTemplate.queryForObject(SQLQueries.SELECT_PERSON_BY_ID,
-		// personRowMapper,id); //or
+		// return
+		// jdbcTemplate.queryForObject(SQLQueries.SELECT_PERSON_BY_ID,personRowMapper,id);
+		// //or
 		return jdbcTemplate.queryForObject(SQLQueries.SELECT_PERSON_BY_ID, new Object[] { id }, personRowMapper);
 	}
 
