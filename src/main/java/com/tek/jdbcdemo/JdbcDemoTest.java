@@ -1,5 +1,6 @@
 package com.tek.jdbcdemo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,12 @@ public class JdbcDemoTest {
 
 		JdbcDemoDAO demoDAO = context.getBean("jdbcDemoDAO", JdbcDemoDAO.class);
 
-		List<Person> persons = demoDAO.getPersons();
+		List<Person> persons = new ArrayList<Person>();
+		persons.add(new Person("Sushmitha",24));
+		persons.add(new Person("Sadhana",25));
+		demoDAO.savePersons(persons);
+		
+		persons = demoDAO.getPersons();
 		for (Person person : persons) {
 			System.out.println(person);
 			System.out.println(person.getName() + "   " + person.getAge());
@@ -47,7 +53,8 @@ public class JdbcDemoTest {
 		System.out.println("-------------Person By Name-----------");
 		System.out.println(demoDAO.getPersonNameById(1));
 
-		demoDAO.savePersonUsingNamedParamJdbcTemplate(new Person("Divya", 23));
+//		demoDAO.savePersonUsingNamedParamJdbcTemplate(new Person("Divya", 23));
+		
 	}
 
 }

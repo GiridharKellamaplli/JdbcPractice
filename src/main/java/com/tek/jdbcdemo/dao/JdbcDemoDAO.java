@@ -1,11 +1,13 @@
 package com.tek.jdbcdemo.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -80,6 +82,21 @@ public class JdbcDemoDAO {
 	public int getPersonsCount() {
 		String sql = "SELECT COUNT(*) FROM person";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+
+	public void savePersons(final List<Person> persons) {
+		jdbcTemplate.batchUpdate(SQLQueries.INSERT_PERSON, new BatchPreparedStatementSetter() {
+
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				Person person = persons.get(i);
+				ps.setString(1, person.getName());
+				ps.setInt(2, person.getAge());
+			}
+
+			public int getBatchSize() {
+				return persons.size();
+			}
+		});
 	}
 
 	public String getPersonNameById(int id) {
