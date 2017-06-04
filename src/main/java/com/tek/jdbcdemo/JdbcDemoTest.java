@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.tek.jdbcdemo.config.BeansConfig;
 import com.tek.jdbcdemo.dao.JdbcDemoDAO;
 import com.tek.jdbcdemo.model.Person;
 
@@ -18,7 +20,8 @@ public class JdbcDemoTest {
 
 	private void insertAndGetPerson() {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("beansConfig.xml");
+//		ApplicationContext context = new ClassPathXmlApplicationContext("beansConfig.xml");
+		ApplicationContext context = new AnnotationConfigApplicationContext(BeansConfig.class);
 
 		JdbcDemoDAO demoDAO = context.getBean("jdbcDemoDAO", JdbcDemoDAO.class);
 
@@ -44,7 +47,7 @@ public class JdbcDemoTest {
 		System.out.println("-------------Person By Name-----------");
 		System.out.println(demoDAO.getPersonNameById(1));
 
-		demoDAO.savePersonUsingNamedParamJdbcTemplate(new Person("Mounika", 23));
+		demoDAO.savePersonUsingNamedParamJdbcTemplate(new Person("Divya", 23));
 	}
 
 }
